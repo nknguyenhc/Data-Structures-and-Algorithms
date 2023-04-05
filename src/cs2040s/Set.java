@@ -3,6 +3,8 @@ package cs2040s;
 public interface Set<T> {
     /**
      * Add the element to the set.
+     * This operation allows duplicate elements.
+     * However, if the reference is already in the set, no operation is done.
      * @param elem the element to be added
      */
     public void add(T elem);
@@ -15,9 +17,9 @@ public interface Set<T> {
     public boolean contains(T elem);
 
     /**
-     * Return the address object that is equal (qualified by Object.equals(Object)) to the given element.
+     * Return the reference object that is equal (qualified by Object.equals(Object)) to the given element.
      * @param elem the element to compare
-     * @return the address object, or null if the element does not exist
+     * @return the reference object, or null if the element does not exist
      */
     public T object(T elem);
 
