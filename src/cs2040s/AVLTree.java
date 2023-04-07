@@ -278,7 +278,90 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
 
     @Override
     public T floor(T node) {
-        
+        T ans = null;
+        T curr = this.root;
+        while(curr != null) {
+            if (curr.equals(node)) {
+                return curr;
+            } else if (curr.compareTo(node) > 0) {
+                curr = this.leftNode(curr);
+            } else {
+                ans = curr;
+                curr = this.rightNode(curr);
+            }
+        }
+        return ans;
+    }
+
+    @Override
+    public T lower(T node) {
+        T ans = null;
+        T curr = this.root;
+        while (curr != null) {
+            if (curr.compareTo(node) >= 0) {
+                curr = this.leftNode(curr);
+            } else {
+                ans = curr;
+                curr = this.rightNode(curr);
+            }
+        }
+        return ans;
+    }
+
+    @Override
+    public T ceil(T node) {
+        T ans = null;
+        T curr = this.root;
+        while (curr != null) {
+            if (curr.equals(node)) {
+                return curr;
+            } else if (curr.compareTo(node) > 0) {
+                ans = curr;
+                curr = this.leftNode(curr);
+            } else {
+                curr = this.rightNode(curr);
+            }
+        }
+        return ans;
+    }
+
+    @Override
+    public T higher(T node) {
+        T ans = null;
+        T curr = this.root;
+        while (curr != null) {
+            if (curr.compareTo(node) <= 0) {
+                curr = this.rightNode(curr);
+            } else {
+                ans = curr;
+                curr = this.leftNode(curr);
+            }
+        }
+        return ans;
+    }
+
+    @Override
+    public T lowest() {
+        T ans = this.root;
+        if (ans == null) {
+            return null;
+        }
+        while (this.leftNode(ans) != null) {
+            ans = this.leftNode(ans);
+        }
+        return ans;
+    }
+
+    @Override
+    public T highest() {
+        T ans = this.root;
+        if (ans == null) {
+            return null;
+        }
+        while (this.rightNode(ans) != null) {
+            ans = this.rightNode(ans);
+        }
+        return ans;
     }
 
     @Override
