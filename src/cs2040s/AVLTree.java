@@ -1,5 +1,12 @@
 package cs2040s;
 
+/**
+ * AVLTree implementation of an order statistic tree.
+ * The elements inside the tree have the same reference as the input.
+ * Therefore, the input is mutated, the user must call the tree to update the element.
+ * The element must inherit AVLNode. The user can simply declare the inheritance to make a type usable this tree.
+ * @param <T> The type of element to store
+ */
 public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     private T root;
     private int size = 0;
@@ -94,7 +101,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
 
         T curr = this.root;
         while (curr != null) {
-            if (curr.equals(node)) {
+            if (curr.compareTo(node) == 0) {
                 return curr;
             }
             if (curr.compareTo(node) > 0) {
@@ -126,8 +133,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
         if (node.tree == this) {
             return;
         }
-        node.weight = 1;
-        node.height = 0;
+        node.resetNode();
         node.tree = this;
         this.size++;
         if (this.root == null) {
@@ -238,8 +244,6 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
             }
             replacementAVLNode.setLeft(node.left);
             replacementAVLNode.setRight(node.right);
-            node.left = null;
-            node.right = null;
         } else {
             T child;
             if (node.left == null) {
@@ -255,6 +259,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
                 this.root = child;
             }
         }
+        node.resetNode();
 
         // rebalancing
         if (curr != null) {
@@ -281,7 +286,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
         T ans = null;
         T curr = this.root;
         while(curr != null) {
-            if (curr.equals(node)) {
+            if (curr.compareTo(node) == 0) {
                 return curr;
             } else if (curr.compareTo(node) > 0) {
                 curr = this.leftNode(curr);
@@ -313,7 +318,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
         T ans = null;
         T curr = this.root;
         while (curr != null) {
-            if (curr.equals(node)) {
+            if (curr.compareTo(node) == 0) {
                 return curr;
             } else if (curr.compareTo(node) > 0) {
                 ans = curr;
@@ -395,6 +400,13 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     public Integer rank(T node) {
         T ref = this.object(node);
         return this.rankByReference(ref);
+    }
+
+    public void resetReference(T node) {
+        boolean test = this.removeByReference(node);
+        if (test) {
+            this.add(node);
+        }
     }
 
     public void preOrderTraversal(AVLNode node) {

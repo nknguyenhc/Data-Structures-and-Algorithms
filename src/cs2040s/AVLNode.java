@@ -98,6 +98,16 @@ public abstract class AVLNode implements Comparable<AVLNode> {
         this.weight = this.leftWeight() + this.rightWeight() + 1;
     }
 
-    @Override
-    public abstract boolean equals(Object obj);
+    final void resetNode() {
+        this.left = null;
+        this.right = null;
+        this.parent = null;
+        this.height = 0;
+        this.weight = 1;
+        this.tree = null;
+    }
+
+    public boolean inTree(AVLTree tree) {
+        return this.tree == tree;
+    }
 }
