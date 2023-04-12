@@ -106,8 +106,4 @@ public abstract class AVLNode implements Comparable<AVLNode> {
         this.weight = 1;
         this.tree = null;
     }
-
-    public boolean inTree(AVLTree tree) {
-        return this.tree == tree;
-    }
 }
