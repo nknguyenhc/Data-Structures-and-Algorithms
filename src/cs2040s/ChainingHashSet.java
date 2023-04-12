@@ -6,7 +6,10 @@ public class ChainingHashSet<T extends ChainingHashNode> implements Set<T> {
 
         public void add(T elem) {
             elem.next = this.first;
-            this.first.last = elem;
+            elem.last = null;
+            if (this.first != null) {
+                this.first.last = elem;
+            }
             this.first = elem;
         }
     }
@@ -14,6 +17,8 @@ public class ChainingHashSet<T extends ChainingHashNode> implements Set<T> {
     Control[] table;
     int elemCount = 0;
     private static int MIN_TABLE_SIZE = 2;
+    private static double UPSIZING_LOAD_FACTOR = 1;
+    private static double DOWNSIZING_LOAD_FACTOR = 0.25;
 
     public ChainingHashSet() {
         this(2);
@@ -81,6 +86,23 @@ public class ChainingHashSet<T extends ChainingHashNode> implements Set<T> {
         this.table[hashValue].add(elem);
         elem.set = this;
         this.elemCount += 1;
+        if (((double) this.elemCount) / this.table.length >= ChainingHashSet.UPSIZING_LOAD_FACTOR) {
+            this.changeTableSize(this.table.length * 2);
+        }
+    }
+
+    private void changeTableSize(int newSize) {
+        Control[] oldTable = this.table;
+        @SuppressWarnings("unchecked")
+        Control[] temp = (Control[]) new Object[newSize];
+        this.table = temp;
+        for (Control control: oldTable) {
+            T curr = control.first;
+            while (curr != null) {
+                this.add(curr);
+                curr = this.getNext(curr);
+            }
+        }
     }
 
     @Override
@@ -92,6 +114,10 @@ public class ChainingHashSet<T extends ChainingHashNode> implements Set<T> {
             elem.next = null;
             elem.set = null;
             this.elemCount--;
+            if (((double) this.elemCount) / this.table.length <= ChainingHashSet.DOWNSIZING_LOAD_FACTOR
+                    & this.table.length / 2 >= ChainingHashSet.MIN_TABLE_SIZE) {
+                this.changeTableSize(this.table.length / 2);
+            }
             return true;
         }
         return false;
