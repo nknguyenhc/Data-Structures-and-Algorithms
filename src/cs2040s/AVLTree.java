@@ -408,12 +408,4 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
             this.add(node);
         }
     }
-
-    public void preOrderTraversal(AVLNode node) {
-        if (node != null) {
-            System.out.println(node);
-            this.preOrderTraversal(node.left);
-            this.preOrderTraversal(node.right);
-        }
-    }
 }

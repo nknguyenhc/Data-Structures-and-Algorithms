@@ -46,21 +46,4 @@ public interface TreeSet<T extends Comparable<? super T>> extends Set<T> {
      * @return the greatest element, or null if the set is empty
      */
     public T highest();
-
-    /**
-     * Check if the reference of this object is in the tree set.
-     * This operation checks by reference and therefore takes O(1) time.
-     * @param elem the reference to check
-     * @return true if the reference of the element is in the set.
-     */
-    public boolean containsReference(T elem);
-
-    /**
-     * Remove the reference from the set.
-     * This operation cuts down on time searching for the element in the set.
-     * This operation still takes O(log n) time.
-     * @param elem the reference to remove
-     * @return true if the element was previously in the set
-     */
-    public boolean removeByReference(T elem);
 }
