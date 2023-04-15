@@ -1,5 +1,10 @@
 package cs2040s;
 
+/**
+ * Implementation of a hash table using chaining.
+ * To indicate the type, make sure to inherit from ChainingHashNode.
+ * @param <T> type of elements in the set, subtype of ChainingHashNode
+ */
 public class ChainingHashSet<T extends ChainingHashNode> implements Set<T> {
     private class Control {
         public T first;
