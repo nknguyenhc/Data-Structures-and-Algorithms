@@ -87,6 +87,9 @@ public class ChainingHashSet<T extends ChainingHashNode> implements Set<T> {
 
     @Override
     public void add(T elem) {
+        if (elem.set == this) {
+            return;
+        }
         int hashValue = this.hash(elem);
         this.table[hashValue].add(elem);
         elem.set = this;
