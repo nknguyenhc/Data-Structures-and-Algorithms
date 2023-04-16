@@ -17,4 +17,12 @@ public interface OrderStatisticsTreeSet<T extends Comparable<? super T>> extends
      * @return the rank of the element, or null if the element is not in the set
      */
     public Integer rankByReference(T elem);
+
+    /**
+     * Return the element that corresponds to this rank.
+     * This operation takes O(log n) as it traverses down the tree.
+     * @param rank the rank of the desired element
+     * @return the element with the rank
+     */
+    public T findElemByRank(int rank);
 }

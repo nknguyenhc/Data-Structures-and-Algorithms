@@ -231,6 +231,14 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
             }
         } else if (node.left != null & node.right != null) {
             T replacementAVLNode = this.predecessorInSubtree(node);
+            T leftNode = this.leftNode(node);
+            if (leftNode == replacementAVLNode) {
+                leftNode = this.leftNode(replacementAVLNode);
+            }
+            T rightNode = this.rightNode(node);
+            if (rightNode == replacementAVLNode) {
+                rightNode = this.rightNode(replacementAVLNode);
+            }
             if (replacementAVLNode.parent == node) {
                 curr = replacementAVLNode;
             } else {
@@ -242,8 +250,8 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
             } else {
                 this.root = replacementAVLNode;
             }
-            replacementAVLNode.setLeft(node.left);
-            replacementAVLNode.setRight(node.right);
+            replacementAVLNode.setLeft(leftNode);
+            replacementAVLNode.setRight(rightNode);
         } else {
             T child;
             if (node.left == null) {
@@ -407,5 +415,38 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
         if (test) {
             this.add(node);
         }
+    }
+
+    @Override
+    public T findElemByRank(int rank) {
+        if (rank > this.size | rank <= 0) {
+            return null;
+        }
+
+        T curr = this.root;
+        int currRank = curr.rightWeight() + 1;
+        while (true) {
+            if (currRank == rank) {
+                return curr;
+            } else if (currRank < rank) {
+                curr = this.leftNode(curr);
+                currRank += curr.rightWeight() + 1;
+            } else {
+                curr = this.rightNode(curr);
+                currRank -= curr.leftWeight() + 1;
+            }
+        }
+    }
+
+    private void preOrderTraversal(T node) {
+        if (node != null) {
+            System.out.println(node);
+            this.preOrderTraversal(this.leftNode(node));
+            this.preOrderTraversal(this.rightNode(node));
+        }
+    }
+
+    public void preOrderTraversal() {
+        this.preOrderTraversal(this.root);
     }
 }
