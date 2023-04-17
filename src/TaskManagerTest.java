@@ -25,9 +25,7 @@ public class TaskManagerTest {
     public void normal2() {
         TaskManager taskManager = new TaskManager();
         taskManager.insert("Buy stationery", 9);
-        System.out.println("Finished insert 1");
         taskManager.insert("Visit relatives", 3);
-        System.out.println("Finished insert 2");
         assertEquals("Buy stationery", taskManager.getNextTask());
         assertEquals("Visit relatives", taskManager.getNextTask());
     }
