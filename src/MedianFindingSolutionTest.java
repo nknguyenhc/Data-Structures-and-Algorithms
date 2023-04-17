@@ -18,7 +18,6 @@ public class MedianFindingSolutionTest {
 
     @org.junit.Test
     public void test2() {
-        System.out.println("Test 2");
         MedianFindingSolution finder = new MedianFindingSolution();
         finder.insert(4);
         finder.insert(2);

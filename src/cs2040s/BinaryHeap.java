@@ -1,5 +1,9 @@
 package cs2040s;
 
+/**
+ * This class uses binary heap to implement priority queue.
+ * @param <T> the type of elements in the heap
+ */
 public class BinaryHeap<T extends Comparable<? super T>> implements PriorityQueue<T> {
     T[] arrRep;
     int size = 0;
@@ -14,7 +18,7 @@ public class BinaryHeap<T extends Comparable<? super T>> implements PriorityQueu
 
     public BinaryHeap(int initialSize) {
         @SuppressWarnings("unchecked")
-        T[] temp = (T[]) new Comparable[initialSize];
+        T[] temp = (T[]) new Comparable<?>[initialSize];
         this.arrRep = temp;
         this.currCap = initialSize;
     }
@@ -55,6 +59,8 @@ public class BinaryHeap<T extends Comparable<? super T>> implements PriorityQueu
             if (this.arrRep[parentI].compareTo(this.arrRep[currI]) < 0) {
                 this.swap(parentI, currI);
                 currI = parentI;
+            } else {
+                break;
             }
         }
     }
