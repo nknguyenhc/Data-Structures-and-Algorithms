@@ -130,6 +130,17 @@ public class BinaryHeap<T extends Comparable<? super T>> implements PriorityQueu
         return result;
     }
 
+    public static <T extends Comparable<? super T>> BinaryHeap<T> heapify(T[] arr) {
+        BinaryHeap<T> heap = new BinaryHeap<>();
+        heap.arrRep = arr;
+        heap.size = arr.length;
+        heap.currCap = arr.length;
+        for (int i = arr.length - 1; i >= 0; i--) {
+            heap.bubbleDown(i);
+        }
+        return heap;
+    }
+
     @Override
     public int size() {
         return this.size;

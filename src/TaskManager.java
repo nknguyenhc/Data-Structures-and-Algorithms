@@ -1,5 +1,4 @@
 import cs2040s.BinaryHeap;
-import cs2040s.Comparable;
 
 public class TaskManager {
     private static class Task implements Comparable<Task>{

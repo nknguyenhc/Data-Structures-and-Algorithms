@@ -29,12 +29,29 @@ public class RangeNode<T extends Comparable<? super T>> extends AVLNode {
         return this.leftEnd.compareTo(elem) < 0 & this.rightEnd.compareTo(elem) > 0;
     }
 
-    public T getLeft() {
+    public T getLeftEnd() {
         return this.leftEnd;
     }
 
-    public T getRight() {
+    public T getRightEnd() {
         return this.rightEnd;
+    }
+
+    final void updateMaxInChildren() {
+        if (this.left != null) {
+            @SuppressWarnings("unchecked")
+            RangeNode<T> leftNode = (RangeNode<T>) this.left;
+            if (leftNode.maxInChildren.compareTo(this.maxInChildren) > 0) {
+                this.maxInChildren = leftNode.maxInChildren;
+            }
+        }
+        if (this.right != null) {
+            @SuppressWarnings("unchecked")
+            RangeNode<T> rightNode = (RangeNode<T>) this.right;
+            if (rightNode.maxInChildren.compareTo(this.maxInChildren) > 0) {
+                this.maxInChildren = rightNode.maxInChildren;
+            }
+        }
     }
 
     /**
