@@ -1,11 +1,11 @@
 package cs2040s;
 
-public class RangeNode extends AVLNode {
-    double leftEnd;
-    double rightEnd;
-    double maxInChildren;
+public class RangeNode<T extends Comparable<? super T>> extends AVLNode {
+    T leftEnd;
+    T rightEnd;
+    T maxInChildren;
 
-    public RangeNode(double leftEnd, double rightEnd) {
+    public RangeNode(T leftEnd, T rightEnd) {
         this.leftEnd = leftEnd;
         this.rightEnd = rightEnd;
     }
@@ -15,8 +15,8 @@ public class RangeNode extends AVLNode {
      * @param elem the element to determine
      * @return true if the element is contained within this range
      */
-    public boolean contains(double elem) {
-        return this.leftEnd <= elem & this.rightEnd >= elem;
+    public boolean contains(T elem) {
+        return this.leftEnd.compareTo(elem) <= 0 & this.rightEnd.compareTo(elem) >= 0;
     }
 
     /**
@@ -25,25 +25,27 @@ public class RangeNode extends AVLNode {
      * @param elem the element to determine
      * @return true if the element is contained within this range
      */
-    public boolean strictlyContains(double elem) {
-        return this.leftEnd < elem & this.rightEnd > elem;
+    public boolean strictlyContains(T elem) {
+        return this.leftEnd.compareTo(elem) < 0 & this.rightEnd.compareTo(elem) > 0;
     }
 
-    public double getLeft() {
+    public T getLeft() {
         return this.leftEnd;
     }
 
-    public double getRight() {
+    public T getRight() {
         return this.rightEnd;
     }
 
     /**
      * Implements the method from the Comparable interface, for range tree implementation
-     * @param anotherRange another instance of subtype of T
+     * @param anotherNode another instance of subtype of T
      * @return
      */
     @Override
-    public int compareTo(AVLNode anotherRange) {
-        return Double.compare(this.leftEnd, ((RangeNode) anotherRange).leftEnd);
+    public int compareTo(AVLNode anotherNode) {
+        @SuppressWarnings("unchecked")
+        RangeNode<T> anotherRange = (RangeNode<T>) anotherNode;
+        return this.leftEnd.compareTo(anotherRange.leftEnd);
     }
 }
