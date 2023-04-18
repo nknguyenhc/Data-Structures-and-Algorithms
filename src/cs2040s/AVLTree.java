@@ -7,23 +7,23 @@ package cs2040s;
  * The element must inherit AVLNode. The user can simply declare the inheritance to make a type usable this tree.
  * @param <T> The type of element to store
  */
-public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
-    private T root;
-    private int size = 0;
+public class AVLTree<T extends AVLNode> implements TreeSet<T> {
+    T root;
+    int size = 0;
 
-    private T parent(T node) {
+    final T parent(T node) {
         @SuppressWarnings("unchecked")
         T newParent = (T) node.parent;
         return newParent;
     }
 
-    private T leftNode(T node) {
+    final T leftNode(T node) {
         @SuppressWarnings("unchecked")
         T leftNode = (T) node.left;
         return leftNode;
     }
 
-    private T rightNode(T node) {
+    final T rightNode(T node) {
         @SuppressWarnings("unchecked")
         T rightNode = (T) node.right;
         return rightNode;
@@ -94,7 +94,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     }
 
     @Override
-    public T object(T node) {
+    public final T object(T node) {
         if (node.tree == this) {
             return node;
         }
@@ -114,22 +114,22 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     }
 
     @Override
-    public boolean contains(T node) {
+    public final boolean contains(T node) {
         return object(node) != null;
     }
 
     @Override
-    public boolean containsReference(T node) {
+    public final boolean containsReference(T node) {
         return node.tree == this;
     }
 
     @Override
-    public int size() {
+    public final int size() {
         return this.size;
     }
 
     @Override
-    public void add(T node) {
+    public final void add(T node) {
         if (node.tree == this) {
             return;
         }
@@ -173,7 +173,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
         }
     }
 
-    private T predecessorInSubtree(T node) {
+    final T predecessorInSubtree(T node) {
         if (node.left == null) {
             return null;
         } else {
@@ -185,7 +185,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
         }
     }
 
-    private T successor(T node) {
+    final T successor(T node) {
         if (node.right == null) {
             T curr = node;
             while (curr != this.root) {
@@ -205,7 +205,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     }
 
     @Override
-    public boolean removeByReference(T node) {
+    public final boolean removeByReference(T node) {
         if (node == null) {
             return false;
         }
@@ -284,13 +284,13 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     }
 
     @Override
-    public boolean remove(T node) {
+    public final boolean remove(T node) {
         T ref = this.object(node);
         return this.removeByReference(ref);
     }
 
     @Override
-    public T floor(T node) {
+    public final T floor(T node) {
         T ans = null;
         T curr = this.root;
         while(curr != null) {
@@ -307,7 +307,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     }
 
     @Override
-    public T lower(T node) {
+    public final T lower(T node) {
         T ans = null;
         T curr = this.root;
         while (curr != null) {
@@ -322,7 +322,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     }
 
     @Override
-    public T ceil(T node) {
+    public final T ceil(T node) {
         T ans = null;
         T curr = this.root;
         while (curr != null) {
@@ -339,7 +339,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     }
 
     @Override
-    public T higher(T node) {
+    public final T higher(T node) {
         T ans = null;
         T curr = this.root;
         while (curr != null) {
@@ -354,7 +354,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     }
 
     @Override
-    public T lowest() {
+    public final T lowest() {
         T ans = this.root;
         if (ans == null) {
             return null;
@@ -366,7 +366,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
     }
 
     @Override
-    public T highest() {
+    public final T highest() {
         T ans = this.root;
         if (ans == null) {
             return null;
@@ -377,67 +377,6 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
         return ans;
     }
 
-    @Override
-    public Integer rankByReference(T node) {
-        if (node == null) {
-            return null;
-        }
-        if (node.tree != this) {
-            return null;
-        }
-
-        T next = this.successor(node);
-        if (next != null) {
-            if (node.compareTo(next) == 0) {
-                return this.rankByReference(next);
-            }
-        }
-        T curr = node;
-        int total = curr.rightWeight() + 1;
-        while (curr != this.root) {
-            T parent = this.parent(curr);
-            if (curr == parent.left) {
-                total += parent.rightWeight() + 1;
-            }
-            curr = parent;
-        }
-        return total;
-    }
-
-    @Override
-    public Integer rank(T node) {
-        T ref = this.object(node);
-        return this.rankByReference(ref);
-    }
-
-    public void resetReference(T node) {
-        boolean test = this.removeByReference(node);
-        if (test) {
-            this.add(node);
-        }
-    }
-
-    @Override
-    public T findElemByRank(int rank) {
-        if (rank > this.size | rank <= 0) {
-            return null;
-        }
-
-        T curr = this.root;
-        int currRank = curr.rightWeight() + 1;
-        while (true) {
-            if (currRank == rank) {
-                return curr;
-            } else if (currRank < rank) {
-                curr = this.leftNode(curr);
-                currRank += curr.rightWeight() + 1;
-            } else {
-                curr = this.rightNode(curr);
-                currRank -= curr.leftWeight() + 1;
-            }
-        }
-    }
-
     private void preOrderTraversal(T node) {
         if (node != null) {
             System.out.println(node);
@@ -446,7 +385,7 @@ public class AVLTree<T extends AVLNode> implements OrderStatisticsTreeSet<T> {
         }
     }
 
-    public void preOrderTraversal() {
+    public final void preOrderTraversal() {
         this.preOrderTraversal(this.root);
     }
 }

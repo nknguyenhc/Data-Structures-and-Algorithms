@@ -1,4 +1,4 @@
-import cs2040s.AVLTree;
+import cs2040s.AVLOrderStatisticsTree;
 import cs2040s.AVLNode;
 
 public class MedianFindingSolution {
@@ -24,7 +24,7 @@ public class MedianFindingSolution {
         }
     }
 
-    AVLTree<IntNode> tree = new AVLTree<>();
+    AVLOrderStatisticsTree<IntNode> tree = new AVLOrderStatisticsTree<>();
 
     public void insert(int x) {
         this.tree.add(new IntNode(x));

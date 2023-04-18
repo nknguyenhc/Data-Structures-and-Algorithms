@@ -1,10 +1,10 @@
 package cs2040s;
 
-public interface RangeNode<T> {
+public abstract class RangeNode<T> implements Comparable<RangeNode<T>> {
     /**
      * Determine if the given element is contained within this range
      * @param elem the element to determine
      * @return true if the element is contained within this range
      */
-    public boolean contains(T elem);
+    public abstract boolean contains(T elem);
 }

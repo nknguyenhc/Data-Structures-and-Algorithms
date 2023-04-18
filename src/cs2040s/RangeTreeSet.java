@@ -1,6 +1,6 @@
 package cs2040s;
 
-public interface RangeTreeSet<T extends RangeNode<? super U>, U> extends Set<T> {
+public interface RangeTreeSet<T extends RangeNode<? super U>, U> extends TreeSet<T> {
     /**
      * Determine whether the element is inside any range, and if there is, return the range.
      * @param searchElem the element to search for a suitable range

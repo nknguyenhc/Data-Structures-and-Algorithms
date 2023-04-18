@@ -1,5 +1,5 @@
 import cs2040s.AVLNode;
-import cs2040s.AVLTree;
+import cs2040s.AVLOrderStatisticsTree;
 
 public class GCPCSolution {
     private static class Team extends AVLNode {
@@ -32,7 +32,7 @@ public class GCPCSolution {
 
     private Team[] teams;
     private int favourite;
-    private AVLTree tree = new AVLTree();
+    private AVLOrderStatisticsTree tree = new AVLOrderStatisticsTree();
 
     public GCPCSolution(int numOfTeams) {
         this(numOfTeams, 1);
