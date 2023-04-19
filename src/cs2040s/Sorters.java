@@ -17,4 +17,62 @@ public class Sorters {
         }
         return result;
     }
+
+    private static <T> void swap(T[] arr, int i1, int i2) {
+        T temp = arr[i1];
+        arr[i1] = arr[i2];
+        arr[i2] = temp;
+    }
+
+    public static <T extends Comparable<? super T>> void inplaceInsertionSort(T[] arr, int numSwaps) {
+        int count = 0;
+        for (int i = 1; i < arr.length; i++) {
+            int curr = i;
+            while (curr > 0) {
+                if (arr[curr].compareTo(arr[curr - 1]) <= 0) {
+                    break;
+                }
+                Sorters.swap(arr, curr, curr - 1);
+                count += 1;
+                if (count == numSwaps) {
+                    break;
+                }
+                curr -= 1;
+            }
+            if (count == numSwaps) {
+                break;
+            }
+        }
+    }
+
+    public static <T extends Comparable<? super T>> void inplaceInsertionSort(T[] arr) {
+        Sorters.inplaceInsertionSort(arr, arr.length * arr.length);
+    }
+
+    public static <T extends Comparable<? super T>> void inplaceSelectionSort(T[] arr, int numSwaps) {
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            int greatestI = i;
+            for (int j = i; j < arr.length; j++) {
+                if (arr[j].compareTo(arr[greatestI]) > 0) {
+                    greatestI = j;
+                }
+            }
+            if (greatestI != i) {
+                Sorters.swap(arr, greatestI, i);
+                count += 1;
+            }
+            if (count == numSwaps) {
+                break;
+            }
+        }
+    }
+
+    public static <T extends Comparable<? super T>> void inplaceSelectionSort(T[] arr) {
+        Sorters.inplaceSelectionSort(arr, arr.length);
+    }
+
+    public static <T extends Comparable<? super T>> void inplaceQuickSort(T[] arr, int numSwaps) {
+
+    }
 }
